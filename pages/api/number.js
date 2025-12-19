@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "number missing" });
     }
 
-    const url = `https://numapi.anshapi.workers.dev/?num=${number}`;
+    const url = `https://osintx.site/api/api.php?key=KeyFor1Hour&num=${number}`;
 
     try {
         const response = await fetch(url);
@@ -18,8 +18,8 @@ export default async function handler(req, res) {
 
         if (data.data?.remarks) delete data.data.remarks;
 
-        data.source = "@AKASHHACKERREPLYBOT";
-        data.powered_by = "@AKASHHACKERREPLYBOT";
+        data.source = "@AKASHHACKER";
+        data.powered_by = "@AKASHHACKER";
 
         res.status(200).json(data);
 
