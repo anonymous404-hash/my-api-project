@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "number missing" });
     }
 
-    const url = `https://osintx.site/api/api.php?key=KeyFor1Hour&num=${number}`;
+    const url = `https://ravan-lookup.vercel.app/api?key=Ravan&type=mobile&term=${number}`;
 
     try {
         const response = await fetch(url);
