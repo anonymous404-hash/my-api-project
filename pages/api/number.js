@@ -4,37 +4,38 @@ export default async function handler(req, res) {
     const number = req.query.num;
     const userKey = req.query.key;
 
-    // --- YAHAN USERS KI LIST BANAYEIN ---
     const KEYS_DB = {
-        "user1": { key: "AKASH_PAID30DAYS", expiry: "2026-01-25" }, // 25 Jan tak chalega
-        "user2": { key: "AKASH_ABC", expiry: "2026-02-15" }, // 15 Feb tak chalega
-        "trial": { key: "FREE_TRY", expiry: "2026-01-18" },  // Kal expire ho jayega
+        "user1": { key: "AKASH_PAID30DAYS", expiry: "2026-01-25" },
+        "user2": { key: "AKASH_ABC", expiry: "2026-02-15" },
+        "trial": { key: "FREE_TRY", expiry: "2026-01-18" },
     };
 
     if (!userKey) {
         return res.status(401).json({ error: "API Key missing!" });
     }
 
-    // Key check logic
     const foundUser = Object.values(KEYS_DB).find(u => u.key === userKey);
 
     if (!foundUser) {
         return res.status(401).json({ error: "Invalid API Key!" });
     }
 
-    // --- DATE CHECK LOGIC ---
     const today = new Date();
     const expiryDate = new Date(foundUser.expiry);
 
-    // Agar aaj ki date expiry date se badi hai toh block kar do
+    // Calculate Days Remaining
+    const timeDiff = expiryDate.getTime() - today.getTime();
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
     if (today > expiryDate) {
         return res.status(403).json({ 
             error: "Key Expired!", 
+            expiry_date: foundUser.expiry,
+            status: "Expired",
             message: `Aapki key ${foundUser.expiry} ko khatam ho chuki hai.` 
         });
     }
 
-    // --- AAPKA ORIGINAL FETCH LOGIC ---
     if (!number) {
         return res.status(400).json({ error: "number missing" });
     }
@@ -50,6 +51,13 @@ export default async function handler(req, res) {
         delete data.developer;
         if (data.data?.remarks) delete data.data.remarks;
 
+        // --- ADDING KEY INFO TO RESPONSE ---
+        data.key_details = {
+            expiry_date: foundUser.expiry,
+            days_remaining: daysLeft > 0 ? `${daysLeft} Days` : "Last Day Today",
+            status: "Active"
+        };
+        
         data.source = "@AKASHHACKER";
         data.powered_by = "@AKASHHACKER";
 
