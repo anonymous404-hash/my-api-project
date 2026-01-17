@@ -5,12 +5,12 @@ export default function Home() {
   const [number, setNumber] = useState('');
   const [key, setKey] = useState('');
 
-  // ===== NEW: PRICE SYSTEM =====
+  // ===== PRICE SYSTEM (UPDATED) =====
   const [days, setDays] = useState(1);
   const prices = {
-    1: 50,
-    7: 250,
-    30: 800
+    1: 10,
+    7: 50,
+    30: 200
   };
 
   const apiUrl = `/api/number?num=${number}&key=${key}`;
@@ -136,7 +136,7 @@ export default function Home() {
           </a>
         </div>
 
-        {/* ===== NEW: PRICE + GENERATE KEY ===== */}
+        {/* ===== PRICE + GENERATE KEY (UPDATED BOT) ===== */}
         <div style={{
           marginTop: '45px',
           padding: '30px',
@@ -171,7 +171,7 @@ export default function Home() {
           </p>
 
           <a
-            href={`https://t.me/AkashExploits1?text=Hi%20I%20want%20API%20Key%20for%20${days}%20days.%20Price:%20₹${prices[days]}`}
+            href={`https://t.me/Akash_Exploits_bot?start=API_${days}_DAYS_${prices[days]}`}
             target="_blank"
             style={{
               display: 'inline-block',
@@ -186,7 +186,7 @@ export default function Home() {
               boxShadow: '0 0 20px rgba(0,212,255,0.6)'
             }}
           >
-            🚀 GENERATE API KEY
+            🤖 GENERATE API KEY
           </a>
         </div>
       </main>
