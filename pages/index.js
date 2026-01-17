@@ -5,7 +5,14 @@ export default function Home() {
   const [number, setNumber] = useState('');
   const [key, setKey] = useState('');
 
-  // Dynamic URL generate karne ke liye
+  // ===== NEW: PRICE SYSTEM =====
+  const [days, setDays] = useState(1);
+  const prices = {
+    1: 50,
+    7: 250,
+    30: 800
+  };
+
   const apiUrl = `/api/number?num=${number}&key=${key}`;
 
   return (
@@ -32,22 +39,24 @@ export default function Home() {
         borderRadius: '20px',
         boxShadow: '0 0 30px rgba(0, 212, 255, 0.3)',
         backgroundColor: 'rgba(0, 212, 255, 0.02)',
-        maxWidth: '700px',
+        maxWidth: '750px',
+        width: '100%',
         textAlign: 'center',
         backdropFilter: 'blur(10px)'
       }}>
         <h1 style={{ fontSize: '2.2rem', letterSpacing: '3px', marginBottom: '10px' }}>
           ⚡ NUMBER INFO SYSTEM
         </h1>
+
         <p style={{ color: '#aaa', fontSize: '0.9rem', marginBottom: '30px' }}>
-          ADVANCED TELECOM DATA EXTRACTOR BY <b>{ "AKASHHACKER" }</b>
+          ADVANCED TELECOM DATA EXTRACTOR BY <b>AKASHHACKER</b>
         </p>
-        
-        {/* Input Section */}
+
+        {/* INPUT SECTION */}
         <div style={{ marginBottom: '30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <input 
-            type="text" 
-            placeholder="ENTER PHONE NUMBER" 
+          <input
+            type="text"
+            placeholder="ENTER PHONE NUMBER"
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             style={{
@@ -61,9 +70,10 @@ export default function Home() {
               outline: 'none'
             }}
           />
-          <input 
-            type="text" 
-            placeholder="ENTER ACCESS KEY" 
+
+          <input
+            type="text"
+            placeholder="ENTER ACCESS KEY"
             value={key}
             onChange={(e) => setKey(e.target.value)}
             style={{
@@ -79,26 +89,37 @@ export default function Home() {
           />
         </div>
 
-        <div style={{ 
-          backgroundColor: '#111', 
-          padding: '20px', 
-          borderRadius: '10px', 
+        {/* API STATUS */}
+        <div style={{
+          backgroundColor: '#111',
+          padding: '20px',
+          borderRadius: '10px',
           textAlign: 'left',
           borderLeft: '4px solid #00d4ff',
           wordBreak: 'break-all'
         }}>
-          <p style={{ margin: '10px 0', color: '#fff' }}>📡 <b>API STATUS:</b> <span style={{color: '#00ff41'}}>OPERATIONAL</span></p>
-          <p style={{ margin: '10px 0', color: '#fff' }}>🔗 <b>YOUR ENDPOINT:</b><br/> 
+          <p style={{ margin: '10px 0', color: '#fff' }}>
+            📡 <b>API STATUS:</b> <span style={{ color: '#00ff41' }}>OPERATIONAL</span>
+          </p>
+
+          <p style={{ margin: '10px 0', color: '#fff' }}>
+            🔗 <b>YOUR ENDPOINT:</b><br />
             <code style={{ color: '#00d4ff', fontSize: '0.8rem' }}>
               {number && key ? apiUrl : '/api/number?num=...&key=...'}
             </code>
           </p>
         </div>
 
-        <div style={{ marginTop: '40px' }}>
-          <a 
-            href={number && key ? apiUrl : "#"} 
-            onClick={(e) => { if(!number || !key) { e.preventDefault(); alert("Bhai, Number aur Key dono daalo!"); } }}
+        {/* EXECUTE BUTTON */}
+        <div style={{ marginTop: '35px' }}>
+          <a
+            href={number && key ? apiUrl : "#"}
+            onClick={(e) => {
+              if (!number || !key) {
+                e.preventDefault();
+                alert("Bhai, Number aur Key dono daalo!");
+              }
+            }}
             style={{
               textDecoration: 'none',
               color: '#000',
@@ -108,13 +129,64 @@ export default function Home() {
               fontWeight: 'bold',
               fontSize: '1rem',
               boxShadow: '0 5px 15px rgba(0, 212, 255, 0.4)',
-              transition: '0.4s',
               cursor: number && key ? 'pointer' : 'not-allowed'
             }}
-            onMouseOver={(e) => { if(number && key) e.target.style.transform = 'scale(1.05)' }}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             EXECUTE DATA QUERY
+          </a>
+        </div>
+
+        {/* ===== NEW: PRICE + GENERATE KEY ===== */}
+        <div style={{
+          marginTop: '45px',
+          padding: '30px',
+          border: '1px dashed #00d4ff',
+          borderRadius: '18px',
+          backgroundColor: '#0b0b0b'
+        }}>
+          <h2 style={{ letterSpacing: '2px' }}>🔑 GET API ACCESS</h2>
+
+          <select
+            value={days}
+            onChange={(e) => setDays(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px',
+              marginTop: '15px',
+              backgroundColor: '#111',
+              color: '#00d4ff',
+              border: '1px solid #00d4ff',
+              borderRadius: '8px',
+              fontFamily: 'Orbitron',
+              textAlign: 'center'
+            }}
+          >
+            <option value="1">1 Day Access</option>
+            <option value="7">7 Days Access</option>
+            <option value="30">30 Days Access</option>
+          </select>
+
+          <p style={{ marginTop: '15px', fontSize: '1.1rem', color: '#fff' }}>
+            💰 Price: <b>₹{prices[days]}</b>
+          </p>
+
+          <a
+            href={`https://t.me/AkashExploits1?text=Hi%20I%20want%20API%20Key%20for%20${days}%20days.%20Price:%20₹${prices[days]}`}
+            target="_blank"
+            style={{
+              display: 'inline-block',
+              marginTop: '20px',
+              padding: '14px 40px',
+              borderRadius: '50px',
+              backgroundColor: '#00d4ff',
+              color: '#000',
+              fontWeight: 'bold',
+              letterSpacing: '1px',
+              textDecoration: 'none',
+              boxShadow: '0 0 20px rgba(0,212,255,0.6)'
+            }}
+          >
+            🚀 GENERATE API KEY
           </a>
         </div>
       </main>
