@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
     // --- YAHAN USERS KI LIST BANAYEIN ---
     const KEYS_DB = {
-        "user1": { key: "NILOY_XYZ", expiry: "2026-01-25" }, // 25 Jan tak chalega
+        "user1": { key: "AKASH_PAID30", expiry: "2026-01-25" }, // 25 Jan tak chalega
         "user2": { key: "AKASH_ABC", expiry: "2026-02-15" }, // 15 Feb tak chalega
         "trial": { key: "FREE_TRY", expiry: "2026-01-18" },  // Kal expire ho jayega
     };
